@@ -1,0 +1,24 @@
+{
+  "name": "JS task",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JS task",
+  "scripts": {
+    "eslint": "eslint src/**/*.js",
+    "test": "npm run eslint",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "css-loader": "4.2.2",
+    "eslint": "6.1.0",
+    "eslint-config-htmlacademy": "0.5.2",
+    "style-loader": "1.2.1",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
+  },
+  "engines": {
+    "node": "10"
+  }
+}
