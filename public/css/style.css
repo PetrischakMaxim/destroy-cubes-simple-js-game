@@ -101,7 +101,8 @@ body {
 }
 
 .popup__content {
-  padding: 30px;
+  width: 640px;
+  padding: 60px 30px;
   border-radius: 15px;
 }
 
