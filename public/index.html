@@ -4,94 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>“Убери кубики”</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div class="app" id="root">
       <!-- Header -->
-      <header class="app__header pt-2 pb-2">
+      <header class="app__header offset">
         <div class="container">
-          <div class="row">
-            <h1 class="app__title h1">“Убери кубики”</h1>
-          </div>
+          <h1 class="app__title">“Убери кубики”</h1>
         </div>
       </header>
-      <!-- Bar -->
-      <div class="app__bar pt-2 pb-2">
-        <div class="container">
-          <div class="row flex-wrap-reverse">
-            <div class="col-12 col-md-3 d-flex align-items-end">
-              <nav class="app__buttons">
-                <button class="btn-outline-primary btn">Старт/ пауза</button>
-                <button class="btn-outline-dark btn">Новая игра</button>
-              </nav>
-            </div>
-            <div class="col-6 ol-md-3">
-              <div class="points">
-                <p class="points__title">Очки:</p>
-                <div class="points__container border border-primary p-1">
-                  <span class="points__count">0</span>
-                </div>
+
+      <!-- Main -->
+      <main class="game app__main offset">
+        <div class="container container--grid">
+          <!-- Game bar -->
+          <div class="bar game__bar">
+            <!-- Buttons -->
+            <nav class="bar__field controls">
+              <button class="btn-outline-primary btn controls__button">
+                Старт/ пауза
+              </button>
+              <button class="btn-outline-dark btn controls__button">
+                Новая игра
+              </button>
+            </nav>
+            <!-- Points -->
+            <div class="bar__field points">
+              <p class="points__title">Очки:</p>
+              <div class="points__container border border-primary p-1">
+                <b class="points__count">0</b>
               </div>
             </div>
-            <div class="col-6 col-md-3">
-              <div class="timer">
-                <p class="timer__title">Время:</p>
-                <div class="timer__container border border-primary p-1">
-                  <span class="timer__count">01:00</span>
-                </div>
+            <!-- Timer -->
+            <div class="bar__field timer">
+              <p class="timer__title">Время:</p>
+              <div class="timer__container border border-primary p-1">
+                <b class="timer__count">01:00</b>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- Main -->
-      <main class="app__main game pt-2 pb-2">
-        <div class="container d-flex">
-          <div class="row flex-grow-1">
-            <div class="col-12 col-md-9">
-              <div class="game__board border border-primary"></div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="game__stats">
-                <ul class="list-group">
-                  <li class="list-group-item">user1</li>
-                  <li class="list-group-item">user2</li>
-                  <li class="list-group-item">user3</li>
-                  <li class="list-group-item">user4</li>
-                  <li class="list-group-item">user5</li>
-                </ul>
-              </div>
-            </div>
+          <!-- Board -->
+          <div class="game__board board border border-primary"></div>
+          <!-- Stats -->
+          <div class="game__stats stats">
+            <p class="stats__title">Игроки:</p>
+            <ul class="list-group">
+              <li class="list-group-item stats__data">
+                <b class="stats__content" data-stats="name">Alex</b>
+                <b class="stats__content" data-stats="points">120</b>
+              </li>
+            </ul>
           </div>
         </div>
       </main>
-      <section class="popup is-hidden">
+
+      <!-- Footer -->
+      <footer class="app__footer bg-primary offset">
         <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6">
-              <div class="popup__content bg-light shadow">
-                <h2 class="popup__title h2">
-                  Ваш счет: <span class="popup__result">0</span>
-                </h2>
-                <form class="popup__form">
-                  <div class="form-group">
-                    <label for="name">Имя:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="name"
-                      placeholder="Запишите Ваше Имя"
-                      required
-                    />
-                  </div>
-                  <button type="submit" class="btn btn-primary w-100">
-                    Сохранить результат
-                  </button>
-                </form>
-              </div>
+          <p class="text-center text-light">"Убери кубики 2020"</p>
+        </div>
+      </footer>
+      <!-- Popup -->
+      <section class="popup popup--hidden">
+        <div class="popup__content bg-light shadow">
+          <h2 class="popup__title">
+            Ваш счет: <span class="popup__result">0</span>
+          </h2>
+          <form class="popup__form">
+            <div class="form-group">
+              <label for="name">Имя:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Запишите Ваше Имя"
+                required
+              />
             </div>
-          </div>
+            <button type="submit" class="btn btn-primary w-100">
+              Сохранить результат
+            </button>
+          </form>
         </div>
       </section>
     </div>
