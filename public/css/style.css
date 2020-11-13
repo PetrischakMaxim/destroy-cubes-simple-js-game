@@ -171,6 +171,19 @@ body {
   border: 1px solid #000000;
 }
 
+.cube {
+  overflow: hidden;
+  background-color: currentColor;
+  border: 2px dotted currentColor;
+  cursor: pointer;
+  transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.cube--clicked {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Form */
 
 .form-control {

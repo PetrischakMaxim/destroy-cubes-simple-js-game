@@ -1,6 +1,6 @@
 import AbstractView from "./abstract";
 
-export default class Board extends AbstractView {
+export default class Popup extends AbstractView {
 
   getTemplate() {
     return (
