@@ -5,7 +5,7 @@ export default class Stats extends AbstractView {
   getTemplate() {
     return (
       `<div class="game__stats stats">
-        <p class="stats__title">Игроки:</p>
+        <p class="stats__title">Gamers:</p>
         <ul class="list-group">
           <li class="list-group-item stats__data">
             <b class="stats__content" data-stats="name">Alex</b>

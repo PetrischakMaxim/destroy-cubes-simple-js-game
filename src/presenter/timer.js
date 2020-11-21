@@ -1,10 +1,14 @@
+import TimerView from "../view/timer";
+
 import {TICK_TIME} from "../const";
 
 export default class Timer {
 
-  constructor(element, duration, callback) {
-    this._element = element;
+  constructor(duration, callback) {
+    this._view = new TimerView();
+    this._countElement = this._view.getElement().querySelector(`.timer__count`);
     this._duration = duration * 60;
+    this._initialDuration = duration * 60;
     this._callback = callback;
     this._interval = null;
     this._min = null;
@@ -16,6 +20,10 @@ export default class Timer {
     this._updateTick();
   }
 
+  getView() {
+    return this._view;
+  }
+
   pause() {
     this._paused = true;
     this._clearInterval();
@@ -24,7 +32,6 @@ export default class Timer {
   tick() {
     this._paused = false;
     this._interval = window.setInterval(() => {
-
 
       if (--this._duration === 0) {
         this._clearInterval();
@@ -36,6 +43,13 @@ export default class Timer {
     }, TICK_TIME);
   }
 
+  reset() {
+    window.clearInterval(this._interval);
+    this._interval = null;
+    this._duration = this._initialDuration;
+    this._updateTick();
+  }
+
   _updateTick() {
     this._min = parseInt(this._duration / 60, 10);
     this._sec = parseInt(this._duration % 60, 10);
@@ -43,7 +57,7 @@ export default class Timer {
     this._min = (this._min < 10) ? `0${this._min}` : `${this._min}`;
     this._sec = (this._sec < 10) ? `0${this._sec}` : `${this._sec}`;
 
-    this._element.textContent = `${this._min}:${this._sec}`;
+    this._countElement.textContent = `${this._min}:${this._sec}`;
   }
 
   _clearInterval() {

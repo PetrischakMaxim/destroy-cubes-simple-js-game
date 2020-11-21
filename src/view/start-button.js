@@ -11,7 +11,7 @@ export default class StartButton extends AbstractView {
   getTemplate() {
     return (
       `<button class="btn-outline-dark btn controls__button">
-        Новая игра
+        New Game
       </button>`
     );
   }

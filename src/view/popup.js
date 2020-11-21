@@ -7,21 +7,21 @@ export default class Popup extends AbstractView {
       `<section class="popup popup--hidden">
         <div class="popup__content bg-light shadow">
           <h2 class="popup__title">
-            Ваш счет: <span class="popup__result">0</span>
+            Your score: <span class="popup__result">0</span>
           </h2>
           <form class="popup__form">
             <div class="form-group">
-              <label for="name">Имя:</label>
+              <label for="name">Name:</label>
               <input
                 type="text"
                 class="form-control"
                 id="name"
-                placeholder="Запишите Ваше Имя"
+                placeholder="Enter your name"
                 required
               />
             </div>
             <button type="submit" class="btn btn-primary w-100">
-              Сохранить результат
+              Save
             </button>
           </form>
         </div>
