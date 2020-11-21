@@ -280,6 +280,7 @@ body {
 }
 
 .btn:disabled {
+  cursor: not-allowed;
   opacity: 0.65;
 }
 
@@ -406,6 +407,7 @@ body {
 .btn-outline-dark:disabled {
   color: #343a40;
   background-color: transparent;
+  cursor: not-allowed;
 }
 
 .btn-outline-dark:not(:disabled):not(.disabled).active,
