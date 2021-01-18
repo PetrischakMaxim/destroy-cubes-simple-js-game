@@ -1,14 +1,14 @@
 import TimerView from "../view/timer";
 
-import {TICK_TIME} from "../const";
+import {TICK_TIME, TIMER_VALUE} from "../const";
 
 export default class Timer {
 
   constructor(duration, callback) {
     this._view = new TimerView();
     this._countElement = this._view.getElement().querySelector(`.timer__count`);
-    this._duration = duration * 60;
-    this._initialDuration = duration * 60;
+    this._duration = duration * TIMER_VALUE;
+    this._initialDuration = this._duration;
     this._callback = callback;
     this._interval = null;
     this._min = null;

@@ -61,17 +61,11 @@ export default class Game {
 
   _run() {
     this._updateState(this._pausing, this._running);
-
-    console.log(`start`);
-
-    // todo reset Timer new game button click
     this._timerPresenter.tick();
   }
 
   _pause() {
     this._updateState(this._running, this._pausing);
-    console.log(`pause`);
-
     this._timerPresenter.pause();
   }
 
@@ -81,21 +75,27 @@ export default class Game {
   }
 
   _handleStartButtonClick() {
-    this._timerPresenter.reset();
+
+    this._renderMessage(`Че сыграем заново? Время и очки будут сброшены`, ()=> {
+      this._timerPresenter.reset();
+      this._handleToggleButtonClick();
+
+    });
+
   }
 
   _handleToggleButtonClick() {
-    let updatedValue = ``;
+    let currentStatus = ``;
     const toggleButton = this._toggleButtonView.getElement();
     if (toggleButton.dataset.status === `${ButtonStatus.PAUSE}`) {
-      updatedValue = `${ButtonStatus.START}`;
+      currentStatus = `${ButtonStatus.START}`;
       this._pause();
     } else {
-      updatedValue = `${ButtonStatus.PAUSE}`;
+      currentStatus = `${ButtonStatus.PAUSE}`;
       this._run();
     }
-    toggleButton.dataset.status = updatedValue;
-    toggleButton.textContent = updatedValue;
+    toggleButton.dataset.status = currentStatus;
+    toggleButton.textContent = currentStatus;
   }
 
   _updateState(prevStatus, currentStatus) {
@@ -104,6 +104,11 @@ export default class Game {
     }
     prevStatus = currentStatus;
     prevStatus = prevStatus;
+  }
+
+  _renderMessage(message, cb) {
+    let isConfirmed = confirm(`${message}`);
+    return (isConfirmed) ? cb() : false;
   }
 
 }
