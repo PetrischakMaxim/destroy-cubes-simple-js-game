@@ -7,9 +7,11 @@ import StatsView from "../view/stats";
 import BoardView from "../view/board";
 
 import TimerPresenter from "./timer";
+import CubePresenter from "./cube";
 
 import {ButtonStatus} from "../const";
-import {render} from "../utils/dom-utils.js";
+import {render} from "../utils/dom-utils";
+import {getRandomInteger} from "../utils/utils";
 
 export default class Game {
 
@@ -27,6 +29,7 @@ export default class Game {
     this._statsView = new StatsView();
     this._timerPresenter = new TimerPresenter(this._duration, this._end);
 
+    this._interval = null;
     this._running = null;
     this._pausing = false;
 
@@ -59,14 +62,30 @@ export default class Game {
     render(this._controlsView, this._toggleButtonView);
   }
 
+  _renderCubes() {
+    console.log(`run`);
+    // fragment to do
+    this._interval = setInterval(() => {
+      this._cubePresenter = new CubePresenter(this._boardView);
+      this._cubePresenter.init();
+    }, getRandomInteger(750, 2000));
+  }
+
+  _stopCubes() {
+    console.log(`stop`);
+    clearInterval(this._interval);
+  }
+
   _run() {
     this._updateState(this._pausing, this._running);
     this._timerPresenter.tick();
+    this._renderCubes();
   }
 
   _pause() {
     this._updateState(this._running, this._pausing);
     this._timerPresenter.pause();
+    this._stopCubes();
   }
 
   _end() {
@@ -79,7 +98,6 @@ export default class Game {
     this._renderMessage(`Че сыграем заново? Время и очки будут сброшены`, ()=> {
       this._timerPresenter.reset();
       this._handleToggleButtonClick();
-
     });
 
   }
