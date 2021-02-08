@@ -2,12 +2,18 @@ import AbstractView from "./abstract";
 
 export default class Popup extends AbstractView {
 
+  constructor(result = 250) {
+    super();
+    this._hiddenState = `popup--hidden`;
+    this._result = result;
+  }
+
   getTemplate() {
     return (
       `<section class="popup popup--hidden">
         <div class="popup__content bg-light shadow">
           <h2 class="popup__title">
-            Your score: <span class="popup__result">0</span>
+            Your score: <span class="popup__result">${this._result}</span>
           </h2>
           <form class="popup__form">
             <div class="form-group">
@@ -27,6 +33,10 @@ export default class Popup extends AbstractView {
         </div>
       </section>`
     );
+  }
+
+  fadeIn() {
+    this.getElement().classList.remove(this._hiddenState);
   }
 
 }

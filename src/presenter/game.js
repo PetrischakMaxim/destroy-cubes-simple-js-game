@@ -1,3 +1,4 @@
+
 import BarView from "../view/bar";
 import PointsView from "../view/points";
 import ControlsView from "../view/controls";
@@ -5,20 +6,22 @@ import ToggleButtonView from "../view/toggle-button";
 import StartButtonView from "../view/start-button";
 import StatsView from "../view/stats";
 import BoardView from "../view/board";
+import PopupView from "../view/popup";
 
 import TimerPresenter from "./timer";
 import CubePresenter from "./cube";
 
 import {ButtonStatus} from "../const";
 import {render} from "../utils/dom-utils";
-import {getRandomInteger} from "../utils/utils";
+
+import {getRandomInteger, generateId} from "../utils/utils";
 
 export default class Game {
 
-  constructor(container, duration) {
+  constructor(container) {
 
     this._container = container;
-    this._duration = duration || 1;
+    this._duration = 0.1;
 
     this._boardView = new BoardView();
     this._barView = new BarView();
@@ -27,7 +30,12 @@ export default class Game {
     this._startButtonView = new StartButtonView();
     this._pointsView = new PointsView();
     this._statsView = new StatsView();
-    this._timerPresenter = new TimerPresenter(this._duration, this._end);
+    this._popupView = null;
+
+    this._timerPresenter = new TimerPresenter(this._duration, () => {
+      this._end();
+    });
+    this._cubePresenter = new Map();
 
     this._interval = null;
     this._running = null;
@@ -40,7 +48,6 @@ export default class Game {
   init() {
     this._renderElements();
     this._setInnerHandlers();
-
     this._timerPresenter.init();
   }
 
@@ -63,16 +70,15 @@ export default class Game {
   }
 
   _renderCubes() {
-    console.log(`run`);
     // fragment to do
-    this._interval = setInterval(() => {
-      this._cubePresenter = new CubePresenter(this._boardView);
-      this._cubePresenter.init();
+    this._interval = window.setInterval(() => {
+      const id = generateId();
+      this._cubePresenter.set(id, new CubePresenter(this._boardView));
+      this._cubePresenter.get(id).init();
     }, getRandomInteger(750, 2000));
   }
 
   _stopCubes() {
-    console.log(`stop`);
     clearInterval(this._interval);
   }
 
@@ -89,8 +95,14 @@ export default class Game {
   }
 
   _end() {
-    // end game
-    // todo show Popup
+    this._handleToggleButtonClick();
+    this._renderPopup();
+  }
+
+  _renderPopup() {
+    this._popupView = new PopupView();
+    render(this._container, this._popupView);
+    this._popupView.fadeIn();
   }
 
   _handleStartButtonClick() {

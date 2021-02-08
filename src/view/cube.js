@@ -23,8 +23,7 @@ export default class Cube extends AbstractView {
     this.getElement().addEventListener(`click`, this._clickHandler);
   }
 
-  _clickHandler(evt) {
-    evt.preventDefault();
+  _clickHandler() {
     this._click();
   }
 
