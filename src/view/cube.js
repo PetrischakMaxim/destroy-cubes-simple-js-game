@@ -1,12 +1,14 @@
 import AbstractView from "./abstract";
-import {DEFAULT_CUBE_PARAMS} from "../const";
+import {generateId, generateCubeParams} from "../utils/utils";
 
 export default class Cube extends AbstractView {
 
-  constructor(params = DEFAULT_CUBE_PARAMS) {
+  constructor() {
     super();
-    this._params = params;
+    this._id = generateId();
+    this._params = generateCubeParams();
     this._element = this.getElement();
+    this._clikedState = `cube--clicked`;
     this._setStyle(this._element);
     this._clickHandler = this._clickHandler.bind(this);
     this._click = null;
@@ -18,9 +20,17 @@ export default class Cube extends AbstractView {
     );
   }
 
+  getId() {
+    return this._id;
+  }
+
   setClickHandler(callback) {
     this._click = callback;
-    this.getElement().addEventListener(`click`, this._clickHandler);
+    this._element.addEventListener(`click`, this._clickHandler);
+  }
+
+  hide() {
+    this._element.classList.add(this._clikedState);
   }
 
   _clickHandler() {

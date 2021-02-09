@@ -2,7 +2,7 @@ import AbstractView from "./abstract";
 
 export default class Popup extends AbstractView {
 
-  constructor(result = 250) {
+  constructor(result = 0) {
     super();
     this._hiddenState = `popup--hidden`;
     this._result = result;
@@ -35,7 +35,7 @@ export default class Popup extends AbstractView {
     );
   }
 
-  fadeIn() {
+  show() {
     this.getElement().classList.remove(this._hiddenState);
   }
 
