@@ -11,9 +11,9 @@ import CubeView from "../view/cube";
 
 import TimerPresenter from "./timer";
 
-import {ButtonStatus} from "../const";
+import {ButtonStatus, MAX_ALLOWED_CUBE_IN_FIELD} from "../const";
 import {render} from "../utils/dom-utils";
-import {getRandomInteger} from "../utils/utils";
+import {getRandomInteger, getRandomIndex, runCallbacks} from "../utils/utils";
 
 export default class Game {
 
@@ -96,7 +96,7 @@ export default class Game {
   _initCube() {
     this._createCube();
     this._stopRenderCubes();
-    this._renderCubes(getRandomInteger(250, 750));
+    this._renderCubes(getRandomInteger(500, 750));
   }
 
   _createCube() {
@@ -107,6 +107,16 @@ export default class Game {
     const currentCube = this._cubes.get(cubeId);
     currentCube.setClickHandler(() => this._handleCubeClick(cubeId));
     render(this._boardView, currentCube);
+
+    this._hideUnclickedCubes(this._cubes);
+  }
+
+  _hideUnclickedCubes(cubes) {
+    if (cubes.size > MAX_ALLOWED_CUBE_IN_FIELD) {
+      const hideCube = () => this._hideCube(getRandomIndex([...cubes.keys()]));
+      const hidenCubeCount = getRandomInteger(1, 3);
+      runCallbacks(hidenCubeCount, hideCube);
+    }
   }
 
   _hideCube(id) {
@@ -115,7 +125,7 @@ export default class Game {
   }
 
   _stopRenderCubes() {
-    clearInterval(this._interval);
+    window.clearInterval(this._interval);
     this._interval = null;
   }
 

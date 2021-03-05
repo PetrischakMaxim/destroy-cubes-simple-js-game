@@ -7,6 +7,8 @@ export const getRandomInteger = (a = 0, b = 1) => {
 
 export const getRandomIndex = (array) => array[getRandomInteger(0, array.length - 1)];
 
+export const runCallbacks = (times, cb) => new Array(times).fill(null).forEach(cb);
+
 export const getRandomTransition = () => {
   const R1 = ((Math.random() * 0.699) + 0.300).toFixed(3);
   const R2 = ((Math.random() * -0.899) - 0.100).toFixed(3);
