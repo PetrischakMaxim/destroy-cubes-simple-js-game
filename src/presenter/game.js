@@ -12,7 +12,7 @@ import CubeView from "../view/cube";
 import TimerPresenter from "./timer";
 
 import {ButtonStatus, MAX_ALLOWED_CUBE_IN_FIELD} from "../const";
-import {render} from "../utils/dom-utils";
+import {render, remove} from "../utils/dom-utils";
 import {getRandomInteger, getRandomIndex, runCallbacks} from "../utils/utils";
 
 export default class Game {
@@ -121,7 +121,6 @@ export default class Game {
 
   _hideCube(id) {
     this._cubes.get(id).hide();
-    this._cubes.delete(id);
   }
 
   _stopRenderCubes() {
@@ -154,15 +153,22 @@ export default class Game {
     this._pointsView.updateScore(score);
   }
 
+  _clearBoard() {
+    this._updateScore(-1);
+    this._cubes.forEach(remove);
+    this._cubes.clear();
+  }
+
   _handleCubeClick(id) {
     this._updateScore();
     this._hideCube(id);
   }
 
   _handleStartButtonClick() {
-    this._renderMessage(`Че сыграем заново? Время и очки будут сброшены`, ()=> {
+    this._renderMessage(`Play again? Time and points will be reset`, () => {
       this._timerPresenter.reset();
       this._handleToggleButtonClick();
+      this._clearBoard();
     });
   }
 
