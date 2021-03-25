@@ -11,6 +11,8 @@ import CubeView from "../view/cube";
 
 import TimerPresenter from "./timer";
 
+import Store from "../store";
+
 import {ButtonStatus, MAX_ALLOWED_CUBE_IN_FIELD} from "../const";
 import {render, remove} from "../utils/dom-utils";
 import {getRandomInteger, getRandomIndex, runCallbacks} from "../utils/utils";
@@ -20,7 +22,9 @@ export default class Game {
   constructor(container) {
 
     this._container = container;
-    this._duration = 0.5;
+    this._store = new Store();
+    this._data = this._store.getData();
+    this._duration = 1;
     this._score = 0;
 
     this._boardView = new BoardView();
@@ -29,8 +33,9 @@ export default class Game {
     this._toggleButtonView = new ToggleButtonView();
     this._startButtonView = new StartButtonView();
     this._pointsView = new PointsView(this._score);
-    this._statsView = new StatsView();
+    this._statsView = null;
     this._popupView = null;
+
     this._interval = null;
 
     this._cubes = new Map();
@@ -43,7 +48,7 @@ export default class Game {
     this._handleStartButtonClick = this._handleStartButtonClick.bind(this);
     this._handleToggleButtonClick = this._handleToggleButtonClick.bind(this);
     this._handleCubeClick = this._handleCubeClick.bind(this);
-
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   init() {
@@ -75,11 +80,13 @@ export default class Game {
   }
 
   _renderElements() {
+    if (this._data) {
+      this._statsView = new StatsView(this._data);
+      render(this._container, this._statsView);
+    }
     // fragment to do
     render(this._container, this._boardView);
-    render(this._container, this._statsView);
     render(this._container, this._barView);
-
     render(this._barView, this._timerPresenter.getView());
     render(this._barView, this._pointsView);
     render(this._barView, this._controlsView);
@@ -131,6 +138,7 @@ export default class Game {
   _renderPopup() {
     this._popupView = new PopupView(this._score);
     render(this._container, this._popupView);
+    this._popupView.setSubmitHandler(this._handleFormSubmit);
     this._popupView.show();
   }
 
@@ -184,6 +192,12 @@ export default class Game {
     }
     toggleButton.dataset.status = currentStatus;
     toggleButton.textContent = currentStatus;
+  }
+
+  _handleFormSubmit(evt) {
+    const inputValue = evt.target.querySelector(`.form-control`).value;
+    const scoreValue = this._score;
+    this._store.setData(inputValue, scoreValue);
   }
 
 }

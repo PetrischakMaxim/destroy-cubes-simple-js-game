@@ -6,5 +6,3 @@ const mainContainerElement = appElement.querySelector(`.app__main .container`);
 const game = new GamePresenter(mainContainerElement);
 
 game.init();
-
-

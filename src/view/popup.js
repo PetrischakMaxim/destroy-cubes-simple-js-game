@@ -1,11 +1,14 @@
 import AbstractView from "./abstract";
-
 export default class Popup extends AbstractView {
 
   constructor(result = 0) {
     super();
     this._hiddenState = `popup--hidden`;
     this._result = result;
+    this._element = this.getElement();
+
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
+    this._formSubmit = null;
   }
 
   getTemplate() {
@@ -36,7 +39,19 @@ export default class Popup extends AbstractView {
   }
 
   show() {
-    this.getElement().classList.remove(this._hiddenState);
+    this._element.classList.remove(this._hiddenState);
+  }
+
+  setSubmitHandler(callback) {
+    this._formSubmit = callback;
+    this._element.querySelector(`.popup__form`)
+      .addEventListener(`submit`, this._formSubmitHandler);
+  }
+
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._formSubmit(evt);
+    this._element.querySelector(`.popup__form`).submit();
   }
 
 }
